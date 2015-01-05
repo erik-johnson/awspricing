@@ -61,6 +61,12 @@ STORAGE_PRICING_THRESHOLD_MAP = {
 }
 
 RDS_MAP = {
+    "udbInstClass.db.t1.micro"  : { "product_size": "db.t1.micro",
+                               "name"        : "Micro DB Instance",
+                               "memory_in_gb": 0.63,
+                               "core_count"  : 1,
+                               "cpu_power"   : 1.2
+                             },
     "dbInstClass.db.t1.micro"  : { "product_size": "db.t1.micro",
                                "name"        : "Micro DB Instance",
                                "memory_in_gb": 0.63,
@@ -215,16 +221,16 @@ def getStoragePricingThreshold(name):
     """
     return STORAGE_PRICING_THRESHOLD_MAP[name]
 
-#def getRdsSpec(name):
-#    """ Returns a speicification of RDS.
-#
-#    Arguments:
-#    :param name: RDS name in AWS json.
-#
-#    :returns: speicification of RDS.
-#    :rtype: dict
-#    """
-#    return RDS_MAP[name]
+def getRdsSpec(name):
+    """ Returns a speicification of RDS.
+
+    Arguments:
+    :param name: RDS name in AWS json.
+
+    :returns: speicification of RDS.
+    :rtype: dict
+    """
+    return RDS_MAP[name]
 
 def getEC2ProductSize(prefix, suffix):
     """ Returns product_size from AWS json name.
