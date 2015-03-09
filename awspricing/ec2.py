@@ -1,4 +1,4 @@
-import urllib 
+import urllib
 import json
 import re
 import awspricing.mapper
@@ -13,14 +13,15 @@ class EC2(Base):
                          'rhel-od': "http://a0.awsstatic.com/pricing/1/ec2/rhel-od.min.js",
                          'sles-od': "http://a0.awsstatic.com/pricing/1/ec2/sles-od.min.js",
                          'mswin-od': "http://a0.awsstatic.com/pricing/1/ec2/mswin-od.min.js",
-                         'mswinSQL-od': "http://a0.awsstatic.com/pricing/1/ec2/mswinSQL-od.min.js",
-                         'mswinSQLWeb-od': "http://a0.awsstatic.com/pricing/1/ec2/mswinSQLWeb-od.min.js",
+                         #'mswinSQL-od': "http://a0.awsstatic.com/pricing/1/ec2/mswinSQL-od.min.js",
+                         #'mswinSQLWeb-od': "http://a0.awsstatic.com/pricing/1/ec2/mswinSQLWeb-od.min.js",
                          'old-linux-od': "http://a0.awsstatic.com/pricing/1/ec2/previous-generation/linux-od.min.js",
                          'old-rhel-od': "http://a0.awsstatic.com/pricing/1/ec2/previous-generation/rhel-od.min.js",
                          'old-sles-od': "http://a0.awsstatic.com/pricing/1/ec2/previous-generation/sles-od.min.js",
-                         'old-mswin-od': "http://a0.awsstatic.com/pricing/1/ec2/previous-generation/mswin-od.min.js",
-                         'old-mswinSQL-od': "http://a0.awsstatic.com/pricing/1/ec2/previous-generation/mswinSQL-od.min.js",
-                         'old-mswinSQLWeb-od': "http://a0.awsstatic.com/pricing/1/ec2/previous-generation/mswinSQLWeb-od.min.js" }
+                         'old-mswin-od': "http://a0.awsstatic.com/pricing/1/ec2/previous-generation/mswin-od.min.js"
+                         #'old-mswinSQL-od': "http://a0.awsstatic.com/pricing/1/ec2/previous-generation/mswinSQL-od.min.js",
+                         #'old-mswinSQLWeb-od': "http://a0.awsstatic.com/pricing/1/ec2/previous-generation/mswinSQLWeb-od.min.js"
+        }
         self.json_data = dict()
         for pricing_type in pricing_list:
             self.json_data[pricing_type] = self.get_json(pricing_list[pricing_type])
@@ -33,7 +34,6 @@ class EC2(Base):
         """
         server_product_id = self.start_id
         active = 'Y'
-        cpu_power = 1000
         prepayment_term_in_months = 0
         standard_pricing_prepaid  = 0
         software = ''
@@ -82,21 +82,25 @@ class EC2(Base):
                                 elif key in ["mswinSQLWeb-od","old-mswinSQLWeb-od"]:
                                     platform = "MSWINSQLWEB"
                             try:
-                                pricing_hourly = "%.3f" % float(value['prices'][currency])
+                                price = value['prices'][currency]
+                                if price is None:
+                                    pricing_hourly = "0"
+                                else:
+                                    pricing_hourly = "%.3f" % float(price)
                             except ValueError:
                                 pricing_hourly = "0"
                             for architecture in architectures:
-                                query = "INSERT INTO server_product VALUES(%i, %s, '%s', '%s', '%s', %s, %2.1f, '%s', %s, %2.3f, '%s', '%s', %s, '%s', '%s', '%s', %s, %5.2f);" % (
+                                query = "INSERT INTO server_product VALUES(%i, %s, '%s', '%s', '%s', %s, '%s', %s, %2.3f, '%s', '%s', %s, '%s', '%s', '%s', %s, %5.2f);" % (
                                     server_product_id, self.cloud_id, product_size, active, architecture, core_count,
-                                    cpu_power, description, disk_in_gb, memory_in_gb, name, platform,
+                                    description, disk_in_gb, memory_in_gb, name, platform,
                                     prepayment_term_in_months, region_id, software, currency,
                                     pricing_hourly, standard_pricing_prepaid)
                                 queries.append(query)
                                 server_product_id = server_product_id + 1
                                 if platform == 'UNIX':
-                                    query = "INSERT INTO server_product VALUES(%i, %s, '%s', '%s', '%s', %s, %2.1f, '%s', %s, %2.3f, '%s', '%s', %s, '%s', '%s', '%s', %s, %5.2f);" % (
+                                    query = "INSERT INTO server_product VALUES(%i, %s, '%s', '%s', '%s', %s, '%s', %s, %2.3f, '%s', '%s', %s, '%s', '%s', '%s', %s, %5.2f);" % (
                                         server_product_id, self.cloud_id, product_size, active, architecture, core_count,
-                                        cpu_power, description, disk_in_gb, memory_in_gb, name, 'UNKNOWN',
+                                        description, disk_in_gb, memory_in_gb, name, 'UNKNOWN',
                                         prepayment_term_in_months, region_id, software, currency,
                                         pricing_hourly, standard_pricing_prepaid)
                                     queries.append(query)

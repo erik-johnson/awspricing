@@ -1,12 +1,21 @@
 REGION_MAP = {
-    "us-east"    : "us-east-1",
-    "us-west"    : "us-west-1",
-    "us-west-2"  : "us-west-2",
-    "eu-ireland" : "eu-west-1",
-    "apac-sin"   : "ap-southeast-1",
-    "apac-syd"   : "ap-southeast-2",
-    "apac-tokyo" : "ap-northeast-1",
-    "sa-east-1"  : "sa-east-1"
+    "us-east"        : "us-east-1",
+    "us-east-1"      : "us-east-1",
+    "us-west"        : "us-west-1",
+    "us-west-1"      : "us-west-1",
+    "us-west-2"      : "us-west-2",
+    "eu-ireland"     : "eu-west-1",
+    "eu-west-1"      : "eu-west-1",
+    "eu-central-1"   : "eu-central-1",
+    "eu-frankfurt"   : "eu-central-1",
+    "apac-sin"       : "ap-southeast-1",
+    "ap-southeast-1" : "ap-southeast-1",
+    "apac-syd"       : "ap-southeast-2",
+    "ap-southeast-2" : "ap-southeast-2",
+    "apac-tokyo"     : "ap-northeast-1",
+    "ap-northeast-1" : "ap-northeast-1",
+    "sa-east-1"      : "sa-east-1",
+    "us-gov-west-1"  : "us-gov-west-1"
 }
 
 STORAGE_NAME_MAP = {
@@ -61,120 +70,162 @@ STORAGE_PRICING_THRESHOLD_MAP = {
 }
 
 RDS_MAP = {
-    "udbInstClass.db.t1.micro"  : { "product_size": "db.t1.micro",
-                               "name"        : "Micro DB Instance",
-                               "memory_in_gb": 0.63,
-                               "core_count"  : 1,
-                               "cpu_power"   : 1.2
-                             },
-    "dbInstClass.db.t1.micro"  : { "product_size": "db.t1.micro",
-                               "name"        : "Micro DB Instance",
-                               "memory_in_gb": 0.63,
-                               "core_count"  : 1,
-                               "cpu_power"   : 1.2
-                             },
-    "dbInstClass.uDBInst"  : { "product_size": "db.t1.micro",
-                               "name"        : "Micro DB Instance",
-                               "memory_in_gb": 0.63,
-                               "core_count"  : 1,
-                               "cpu_power"   : 1.2
-                             },
-    "dbInstClass.db.m1.small" : { "product_size": "db.m1.small",
+    "db.t1.micro"  : { "product_size": "db.t1.micro",
+                       "name"        : "Micro DB Instance",
+                       "memory_in_gb": 0.615,
+                       "core_count"  : 1,
+                       "cpu_power"   : 1
+                     },
+    "db.m1.small"  : { "product_size": "db.m1.small",
                                "name"        : "Small DB Instance",
                                "memory_in_gb": 1.7,
                                "core_count"  : 1,
-                               "cpu_power"   : 1.2
+                               "cpu_power"   : 1
                              },
-    "dbInstClass.db.m1.medium": { "product_size": "db.m1.medium",
-                               "name"        : "Medium DB Instance",
+    "db.m1.medium":  { "product_size": "db.m1.medium",
+                               "name"        : "Standard Previous Generation Medium DB Instance",
                                "memory_in_gb": 3.75,
                                "core_count"  : 1,
-                               "cpu_power"   : 2.4
+                               "cpu_power"   : 2
                              },
-    "dbInstClass.db.m1.large" : { "product_size": "db.m1.large",
-                               "name"        : "Large DB Instance",
+    "db.m1.large" :  { "product_size": "db.m1.large",
+                               "name"        : "Standard Previous Generation Large DB Instance",
                                "memory_in_gb": 7.5,
                                "core_count"  : 2,
-                               "cpu_power"   : 2.4
+                               "cpu_power"   : 4
                              },
-    "dbInstClass.db.m1.xlarge" : { "product_size": "db.m1.xlarge",
-                               "name"        : "Extra Large DB Instance",
+    "db.m1.xlarge" : { "product_size": "db.m1.xlarge",
+                               "name"        : "Standard Previous Generation Extra Large DB Instance",
                                "memory_in_gb": 15,
                                "core_count"  : 4,
-                               "cpu_power"   : 2.4
+                               "cpu_power"   : 8
                              },
-    "memDBCurrentGen.db.m2.xlarge": { "product_size": "db.m2.xlarge",
-                                   "name"        : "High-Memory Extra Large DB Instance",
+    "db.m2.xlarge":  { "product_size": "db.m2.xlarge",
+                                   "name"        : "Memory Optimized Previous Generation Extra Large DB Instance",
                                    "memory_in_gb": 17.1,
                                    "core_count"  : 2,
-                                   "cpu_power"   : 3.9
+                                   "cpu_power"   : 6.5
                                  },
-    "memDBCurrentGen.db.m2.2xlarge": { "product_size": "db.m2.2xlarge",
-                                    "name"        : "High-Memory Double Extra Large DB Instance",
-                                    "memory_in_gb": 34,
+    "db.m2.2xlarge": { "product_size": "db.m2.2xlarge",
+                                    "name"        : "Memory Optimized Previous Generation Double Extra Large DB Instance",
+                                    "memory_in_gb": 34.2,
                                     "core_count"  : 4,
-                                    "cpu_power"   : 3.9
+                                    "cpu_power"   : 13
                                   },
-    "memDBCurrentGen.db.m2.4xlarge": { "product_size": "db.m2.4xlarge",
-                                     "name"        : "High-Memory Quadruple Extra Large DB Instance",
-                                     "memory_in_gb": 68,
+    "db.m2.4xlarge": { "product_size": "db.m2.4xlarge",
+                                     "name"        : "Memory Optimized Previous Generation Quadruple Extra Large DB Instance",
+                                     "memory_in_gb": 68.4,
                                      "core_count"  : 8,
-                                     "cpu_power"   : 3.9
+                                     "cpu_power"   : 26
                                    },
-    "memDBCurrentGen.db.cr1.8xl":    { "product_size": "db.cr1.8xlarge",
-                                     "name"        : "High-Memory Cluster Eight Extra Large DB Instance",
+    "db.cr1.8xl":    { "product_size": "db.cr1.8xlarge",
+                                     "name"        : "Memory Optimized Previous Generation Eight Extra Large DB Instance",
                                      "memory_in_gb": 244,
                                      "core_count"  : 32,
-                                     "cpu_power"   : 3.3
+                                     "cpu_power"   : 88
                                    },
-    "dbInstClass.db.m3.medium":    { "product_size": "db.m3.medium",
-                                     "name"        : "Current Generation Medium DB Instance",
+    "db.m3.medium":  { "product_size": "db.m3.medium",
+                                     "name"        : "Standard Current Generation Medium DB Instance",
                                      "memory_in_gb": 3.75,
                                      "core_count"  : 1,
                                      "cpu_power"   : 3
                                    },
-    "dbInstClass.db.m3.large":     { "product_size": "db.m3.large",
-                                     "name"        : "Current Generation Large DB Instance",
+    "db.m3.large":   { "product_size": "db.m3.large",
+                                     "name"        : "Standard Current Generation Large DB Instance",
                                      "memory_in_gb": 7.5,
                                      "core_count"  : 2,
                                      "cpu_power"   : 6.5
                                    },
-    "dbInstClass.db.m3.xlarge":    { "product_size": "db.m3.xlarge",
-                                     "name"        : "Current Generation Extra Large DB Instance",
+    "db.m3.xlarge":  { "product_size": "db.m3.xlarge",
+                                     "name"        : "Standard Current Generation Extra Large DB Instance",
                                      "memory_in_gb": 15,
                                      "core_count"  : 4,
                                      "cpu_power"   : 13
                                    },
-    "dbInstClass.db.m3.2xlarge":    { "product_size": "db.m3.2xlarge",
-                                     "name"        : "Current Generation Double Extra Large DB Instance",
+    "db.m3.2xlarge": { "product_size": "db.m3.2xlarge",
+                                     "name"        : "Standard Current Generation Double Extra Large DB Instance",
                                      "memory_in_gb": 30,
                                      "core_count"  : 8,
                                      "cpu_power"   : 26
                                    },
-    "hiMemDBInstClass.db.m2.xlarge": { "product_size": "db.m2.xlarge",
+    "db.m2.xlarge":  { "product_size": "db.m2.xlarge",
                                    "name"        : "High-Memory Extra Large DB Instance",
                                    "memory_in_gb": 17.1,
                                    "core_count"  : 2,
                                    "cpu_power"   : 3.9
                                  },
-    "hiMemDBInstClass.db.m2.2xlarge": { "product_size": "db.m2.2xlarge",
+    "db.m2.2xlarge": { "product_size": "db.m2.2xlarge",
                                     "name"        : "High-Memory Double Extra Large DB Instance",
                                     "memory_in_gb": 34,
                                     "core_count"  : 4,
                                     "cpu_power"   : 3.9
                                   },
-    "hiMemDBInstClass.db.m2.4xlarge": { "product_size": "db.m2.4xlarge",
+    "db.m2.4xlarge": { "product_size": "db.m2.4xlarge",
                                      "name"        : "High-Memory Quadruple Extra Large DB Instance",
                                      "memory_in_gb": 68,
                                      "core_count"  : 8,
                                      "cpu_power"   : 3.9
                                    },
-    "hiMemDBInstClass.db.cr1.8xl":    { "product_size": "db.cr1.8xlarge",
-                                     "name"        : "High-Memory Cluster Eight Extra Large DB Instance",
-                                     "memory_in_gb": 244,
-                                     "core_count"  : 32,
-                                     "cpu_power"   : 3.3
-                                   },
+    "db.cr1.8xl":    { "product_size": "db.cr1.8xlarge",
+                       "name"        : "High-Memory Cluster Eight Extra Large DB Instance",
+                       "memory_in_gb": 244,
+                       "core_count"  : 32,
+                       "cpu_power"   : 3.3
+                     },
+    "db.t2.small":   { "product_size": "db.t2.small",
+                       "name"        : "Burstable Performance Small DB Instance",
+                       "memory_in_gb": 2,
+                       "core_count"  : 1,
+                       "cpu_power"   : 3.3
+    },
+    "db.r3.large":   { "product_size": "db.r3.large",
+                       "name"        : "Memory Optimized Current Generation Large DB Instance",
+                       "memory_in_gb": 15,
+                       "core_count"  : 2,
+                       "cpu_power"   : 6.5
+    },
+    "db.r3.xlarge":   { "product_size": "db.r3.xlarge",
+                       "name"        : "Memory Optimized Current Generation Extra Large DB Instance",
+                       "memory_in_gb": 30.5,
+                       "core_count"  : 4,
+                       "cpu_power"   : 13
+    },
+    "db.r3.2xlarge":   { "product_size": "db.r3.2xlarge",
+                        "name"        : "Memory Optimized Current Generation Double Extra Large DB Instance",
+                        "memory_in_gb": 61,
+                        "core_count"  : 8,
+                        "cpu_power"   : 26
+    },
+    "db.r3.4xlarge":   { "product_size": "db.r3.4xlarge",
+                         "name"        : "Memory Optimized Current Generation Quadruple Extra Large DB Instance",
+                         "memory_in_gb": 122,
+                         "core_count"  : 16,
+                         "cpu_power"   : 52
+    },
+    "db.r3.8xlarge":   { "product_size": "db.r3.8xlarge",
+                         "name"        : "Memory Optimized Current Generation Eight Extra Large DB Instance",
+                         "memory_in_gb": 244,
+                         "core_count"  : 32,
+                         "cpu_power"   : 104
+    },
+    "db.t2.micro":   { "product_size": "db.t2.micro",
+                         "name"        : "Burst Capable Current Generation Micro DB Instance",
+                         "memory_in_gb": 1,
+                         "core_count"  : 1,
+                         "cpu_power"   : 1
+    },
+    "db.t2.small":   { "product_size": "db.t2.small",
+                       "name"        : "Burst Capable Current Generation Small DB Instance",
+                       "memory_in_gb": 2,
+                       "core_count"  : 1,
+                       "cpu_power"   : 1
+    },
+    "db.t2.medium":   { "product_size": "db.t2.medium",
+                       "name"        : "Burst Capable Current Generation Medium DB Instance",
+                       "memory_in_gb": 4,
+                       "core_count"  : 2,
+                       "cpu_power"   : 2
+    },
 }
 
 def getRegionID(name):
