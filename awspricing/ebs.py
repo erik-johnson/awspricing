@@ -24,14 +24,35 @@ class Ebs(Base):
         description="Storage costs for an allocated EBS volume."
         for region in self.json_data['config']['regions']:
             region_id = awspricing.mapper.getRegionID(region['region'])
+            if region_id == 'us-gov-west-1':
+                continue
             for ebs_type in region['types']:
                 if ebs_type['name'] == 'Amazon EBS Magnetic volumes':
-                    pricing = float(ebs_type['values'][0]['prices'][self.currency])
-                    query = "INSERT INTO volume_product VALUES(%i, %i, '%s', '%s', '%s', '%s', '%s', '%s', %i, %.3f);" %\
-                            (volume_product_id, self.cloud_id, region_id, 'standard', 'Y',
-                             self.currency, name, description, pricing_threshold, pricing)
-                    queries.append(query)
-                    volume_product_id = volume_product_id + 1
+                    provider_volume_product_id = 'standard'
+                    max_iops = "NULL"
+                    min_iops = "NULL"
+                    iops_cost = float(ebs_type['values'][1]['prices'][self.currency])
+                elif ebs_type['name'] == 'Amazon EBS General Purpose (SSD) volumes':
+                    provider_volume_product_id = 'gp2'
+                    max_iops = 3000
+                    min_iops = 3000
+                    iops_cost = "NULL"
+                elif ebs_type['name'] == 'Amazon EBS Provisioned IOPS (SSD) volumes':
+                    provider_volume_product_id = 'io1'
+                    max_iops = 4000
+                    min_iops = 100
+                    iops_cost = float(ebs_type['values'][1]['prices'][self.currency])
+                elif ebs_type['name'] == 'ebsSnapsToS3':
+                    continue
+                pricing = float(ebs_type['values'][0]['prices'][self.currency])
+                query = "INSERT INTO volume_product (volume_product_id, cloud_id, provider_region_id, " \
+                        "provider_volume_product_id, active, currency, name, description, pricing_threshold, " \
+                        "volume_pricing, iops_cost, max_iops, min_iops)" \
+                        "VALUES(%i, %i, '%s', '%s', '%s', '%s', '%s', '%s', %i, %.3f, %s, %s, %s);" %\
+                        (volume_product_id, self.cloud_id, region_id, provider_volume_product_id, 'Y',
+                         self.currency, name, description, pricing_threshold, pricing, iops_cost, max_iops, min_iops)
+                queries.append(query)
+                volume_product_id = volume_product_id + 1
 
         return queries
 
