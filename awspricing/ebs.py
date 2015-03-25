@@ -28,16 +28,19 @@ class Ebs(Base):
                 continue
             for ebs_type in region['types']:
                 if ebs_type['name'] == 'Amazon EBS Magnetic volumes':
+                    name = 'EBS Magnetic'
                     provider_volume_product_id = 'standard'
                     max_iops = "NULL"
                     min_iops = "NULL"
                     iops_cost = float(ebs_type['values'][1]['prices'][self.currency])
                 elif ebs_type['name'] == 'Amazon EBS General Purpose (SSD) volumes':
+                    name = 'EBS General Purpose (SSD)'
                     provider_volume_product_id = 'gp2'
                     max_iops = 3000
                     min_iops = 3000
                     iops_cost = "NULL"
                 elif ebs_type['name'] == 'Amazon EBS Provisioned IOPS (SSD) volumes':
+                    name = 'EBS Provisioned IOPS (SSD)'
                     provider_volume_product_id = 'io1'
                     max_iops = 4000
                     min_iops = 100
@@ -46,7 +49,7 @@ class Ebs(Base):
                     continue
                 pricing = float(ebs_type['values'][0]['prices'][self.currency])
                 query = "INSERT INTO volume_product (volume_product_id, cloud_id, provider_region_id, " \
-                        "provider_volume_product_id, active, currency, name, description, pricing_threshold, " \
+                        "provider_product_id, active, currency, name, description, pricing_threshold, " \
                         "volume_pricing, iops_cost, max_iops, min_iops)" \
                         "VALUES(%i, %i, '%s', '%s', '%s', '%s', '%s', '%s', %i, %.3f, %s, %s, %s);" %\
                         (volume_product_id, self.cloud_id, region_id, provider_volume_product_id, 'Y',
